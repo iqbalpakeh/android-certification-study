@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.app.RemoteInput;
 
 import android.view.View;
 import android.view.Menu;
@@ -103,8 +104,34 @@ public class MainActivity extends AppCompatActivity {
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent)
                 .addAction(R.drawable.ic_palette_black_32dp, "SNOOZE", snoozePendingIntent)
-                .addAction(R.drawable.ic_palette_black_32dp, "CANCEL", cancelPendingIntent)
-                .setAutoCancel(true);
+                .addAction(R.drawable.ic_palette_black_32dp, "CANCEL", cancelPendingIntent);
+
+        //
+        // Add reply action from notification
+        //
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
+            RemoteInput remoteInput = new RemoteInput.Builder("key_text_reply")
+                    .setLabel("replyLabel")
+                    .build();
+
+            Intent replyIntent = new Intent(this, MyBroadcastReceiver.class);
+            replyIntent.setAction("ACTION_REPLY");
+            replyIntent.putExtra("EXTRA_NOTIFICATION_ID_REPLY", 0);
+
+            PendingIntent replyPendingIntent =
+                    PendingIntent.getBroadcast(getApplicationContext(),
+                            1,
+                            replyIntent,
+                            PendingIntent.FLAG_UPDATE_CURRENT);
+
+            NotificationCompat.Action replyAction =
+                    new NotificationCompat.Action.Builder(R.drawable.ic_notifications_black_24dp,
+                            "REPLY", replyPendingIntent)
+                            .addRemoteInput(remoteInput)
+                            .build();
+
+            builder.addAction(replyAction).setAutoCancel(true);
+        }
 
         //
         // Show the notification to user interface
