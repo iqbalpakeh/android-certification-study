@@ -38,28 +38,24 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
     private void action(View view) {
 
+        //
+        // Need to create notification channel for android version above API Level 26
+        //
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "My Notification Channel";
             String description = "My Notification Channel Description";
@@ -70,22 +66,34 @@ public class MainActivity extends AppCompatActivity {
             notificationManager.createNotificationChannel(channel);
         }
 
+        //
+        // Intent to go to MainActivity if user press the notification
+        //
         Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
+        //
+        // Add snooze action to notification. This will be handled by MyBroadcastReceiver class
+        //
         Intent snoozeIntent = new Intent(this, MyBroadcastReceiver.class);
         snoozeIntent.setAction("ACTION_SNOOZE");
         snoozeIntent.putExtra("EXTRA_NOTIFICATION_ID_SNOOZE", 0);
         PendingIntent snoozePendingIntent =
                 PendingIntent.getBroadcast(this, 0, snoozeIntent, 0);
 
+        //
+        // Add cancel action to notification. This will be handled by MyBroadcastReceiver class
+        //
         Intent cancelIntent = new Intent(this, MyBroadcastReceiver.class);
         cancelIntent.setAction("ACTION_CANCEL");
         cancelIntent.putExtra("EXTRA_NOTIFICATION_ID_CANCEL", 0);
         PendingIntent cancelPendingIntent =
                 PendingIntent.getBroadcast(this, 0, cancelIntent, 0);
 
+        //
+        // Build the notification with all its options
+        //
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "default")
                 .setSmallIcon(R.drawable.ic_notifications_black_24dp)
                 .setContentTitle("My Notification")
@@ -98,6 +106,9 @@ public class MainActivity extends AppCompatActivity {
                 .addAction(R.drawable.ic_palette_black_32dp, "CANCEL", cancelPendingIntent)
                 .setAutoCancel(true);
 
+        //
+        // Show the notification to user interface
+        //
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
         notificationManager.notify(1, builder.build());
 
