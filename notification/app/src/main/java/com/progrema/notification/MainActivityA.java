@@ -1,5 +1,6 @@
 package com.progrema.notification;
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -19,7 +20,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivityA extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +33,9 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                action(view);
+                // action(view);
+                // actionFullScreenNotification();
+                // actionInboxStyleNotification();
             }
         });
     }
@@ -52,6 +55,60 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void actionInboxStyleNotification() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "My Notification Channel";
+            String description = "My Notification Channel Description";
+            int importance = NotificationManager.IMPORTANCE_LOW;
+            NotificationChannel channel = new NotificationChannel("default", name, importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        Notification notification = new NotificationCompat.Builder(this, "default")
+                .setSmallIcon(R.drawable.ic_notifications_black_24dp)
+                .setContentTitle("5 New mails from iqbalpakeh@gmail.com")
+                .setContentText("Subject Email")
+                .setStyle(new NotificationCompat.InboxStyle()
+                        .addLine("Message 1")
+                        .addLine("Message 2")
+                        .addLine("Message 3"))
+                .build();
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.notify(1, notification);
+    }
+
+    private void actionFullScreenNotification() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "My Notification Channel";
+            String description = "My Notification Channel Description";
+            int importance = NotificationManager.IMPORTANCE_LOW;
+            NotificationChannel channel = new NotificationChannel("default", name, importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        Intent fullScreenIntent = new Intent(this, MainActivityA.class);
+        PendingIntent fullScreenPendingIntent = PendingIntent.getActivity(this, 0,
+                fullScreenIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "default")
+                .setSmallIcon(R.drawable.ic_notifications_black_24dp)
+                .setContentTitle("My notification")
+                .setContentText("Hello World!")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setFullScreenIntent(fullScreenPendingIntent, true);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.notify(1, builder.build());
+
+    }
+
     private void action(View view) {
 
         //
@@ -68,9 +125,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //
-        // Intent to go to MainActivity if user press the notification
+        // Intent to go to MainActivityA if user press the notification
         //
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, MainActivityA.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
@@ -104,7 +161,8 @@ public class MainActivity extends AppCompatActivity {
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent)
                 .addAction(R.drawable.ic_palette_black_32dp, "SNOOZE", snoozePendingIntent)
-                .addAction(R.drawable.ic_palette_black_32dp, "CANCEL", cancelPendingIntent);
+                .addAction(R.drawable.ic_palette_black_32dp, "CANCEL", cancelPendingIntent)
+                .setAutoCancel(true);
 
         //
         // Add reply action from notification
@@ -130,8 +188,14 @@ public class MainActivity extends AppCompatActivity {
                             .addRemoteInput(remoteInput)
                             .build();
 
-            builder.addAction(replyAction).setAutoCancel(true);
+            builder.addAction(replyAction);
         }
+
+        //
+        // Show progress bar
+        //
+        // builder.setProgress(100,10,false);
+        builder.setProgress(0,0,true);
 
         //
         // Show the notification to user interface
