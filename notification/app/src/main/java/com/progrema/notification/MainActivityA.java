@@ -25,7 +25,7 @@ public class MainActivityA extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_a);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -36,6 +36,9 @@ public class MainActivityA extends AppCompatActivity {
                 // action(view);
                 // actionFullScreenNotification();
                 // actionInboxStyleNotification();
+
+                Intent intent = new Intent(MainActivityA.this, MainActivityB.class);
+                startActivity(intent);
             }
         });
     }
