@@ -12,12 +12,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".MainActivityC" />
+        <activity
+            android:name=".MainActivityC">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivityB"/>
+        </activity>
 
         <activity
             android:name=".MainActivityB"
             android:label="@string/title_activity_main_b"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivityA"/>
+        </activity>
 
         <activity
             android:name=".MainActivityA"
@@ -32,6 +41,7 @@
         <receiver
             android:name=".MyBroadcastReceiver"
             android:exported="true" />
+
     </application>
 
 </manifest>
