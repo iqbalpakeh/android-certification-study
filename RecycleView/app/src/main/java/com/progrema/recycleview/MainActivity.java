@@ -7,7 +7,7 @@ import android.util.Log;
 
 import com.progrema.recycleview.dummy.DummyContent;
 
-public class MainActivity extends AppCompatActivity  implements ItemFragment.OnListFragmentInteractionListener{
+public class MainActivity extends AppCompatActivity implements ItemFragment.OnListFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
