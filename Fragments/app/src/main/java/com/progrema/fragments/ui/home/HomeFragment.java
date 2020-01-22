@@ -30,8 +30,8 @@ public class HomeFragment extends Fragment {
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
         homeViewModel.getText().observe(this, new Observer<String>() {
             @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
+            public void onChanged(@Nullable String text) {
+                textView.setText(text);
             }
         });
 
