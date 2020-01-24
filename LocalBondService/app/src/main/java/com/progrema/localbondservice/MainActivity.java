@@ -72,7 +72,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         // Bind to LocalService
-        Intent intent = new Intent(this, LocalService.class);
+        // Intent intent = new Intent(this, LocalService.class);
+        Intent intent = new Intent();
+        intent.setClassName("com.progrema.localbondservice", "com.progrema.localbondservice.LocalService");
         bindService(intent, connection, Context.BIND_AUTO_CREATE);
     }
 
