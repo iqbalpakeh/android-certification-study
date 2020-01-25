@@ -8,13 +8,17 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.progrema.roomwordsample.db.Word;
+
 import java.util.List;
 
 public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordViewHolder> {
 
     private final LayoutInflater mInflater;
+
     private List<Word> mWords; // Cached copy of words
-    WordListAdapter(Context context) {
+
+    public WordListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
     }
 
@@ -35,7 +39,7 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
         }
     }
 
-    void setWords(List<Word> words) {
+    public void setWords(List<Word> words) {
         mWords = words;
         notifyDataSetChanged();
     }
@@ -44,12 +48,15 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
     // mWords has not been updated (means initially, it's null, and we can't return null).
     @Override
     public int getItemCount() {
-        if (mWords != null)
+        if (mWords != null) {
             return mWords.size();
-        else return 0;
+        } else {
+            return 0;
+        }
     }
 
-    class WordViewHolder extends RecyclerView.ViewHolder {
+    public class WordViewHolder extends RecyclerView.ViewHolder {
+
         private final TextView wordItemView;
 
         private WordViewHolder(View itemView) {

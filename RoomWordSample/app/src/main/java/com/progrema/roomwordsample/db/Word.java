@@ -1,4 +1,4 @@
-package com.progrema.roomwordsample;
+package com.progrema.roomwordsample.db;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;

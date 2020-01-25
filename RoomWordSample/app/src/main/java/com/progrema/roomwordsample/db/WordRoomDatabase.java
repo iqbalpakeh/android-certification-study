@@ -1,4 +1,4 @@
-package com.progrema.roomwordsample;
+package com.progrema.roomwordsample.db;
 
 import android.content.Context;
 
@@ -17,6 +17,7 @@ public abstract class WordRoomDatabase extends RoomDatabase {
     private static final int NUMBER_OF_THREADS = 4;
     static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
     private static volatile WordRoomDatabase INSTANCE;
+
     private static RoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback() {
         @Override
         public void onOpen(@NonNull SupportSQLiteDatabase db) {
@@ -25,6 +26,7 @@ public abstract class WordRoomDatabase extends RoomDatabase {
             // If you want to keep data through app restarts,
             // comment out the following block
             databaseWriteExecutor.execute(() -> {
+
                 // Populate the database in the background.
                 // If you want to start with more words, just add them.
                 WordDao dao = INSTANCE.wordDao();
