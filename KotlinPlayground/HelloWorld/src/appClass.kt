@@ -52,11 +52,11 @@ fun main() {
     println("\nSection 5")
 
     for(i in 1..100) {
-        println(fizzbuzz(i))
+        println(fizzBuzz(i))
     }
 
     for(i in 100 downTo 1 step 2) {
-        println(fizzbuzz(i))
+        println(fizzBuzz(i))
     }
 }
 
@@ -167,7 +167,7 @@ fun evalWithLogging(e: Expr): Int =
 // 5
 // ------------------------------
 
-fun fizzbuzz(i: Int) = when {
+fun fizzBuzz(i: Int) = when {
     i % 15 == 0 -> "FizzBuzz "
     i % 3 == 0 -> "Fizz "
     i % 5 == 0 -> "Buzz "
