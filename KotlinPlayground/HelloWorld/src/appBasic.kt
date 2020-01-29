@@ -3,16 +3,22 @@ fun main() {
     // ------------------------------
     // 1
     // ------------------------------
+    println("\nSection 1")
+
     println("Hello World!")
 
     // ------------------------------
     // 2
     // ------------------------------
+    println("\nSection 2")
+
     println(sum(2, 3))
 
     // ------------------------------
     // 3
     // ------------------------------
+    println("\nSection 3")
+
     var a = 1
     val s1 = "a is $a"
 
@@ -25,11 +31,15 @@ fun main() {
     // ------------------------------
     // 4
     // ------------------------------
+    println("\nSection 4")
+
     println("Max of 2 and 4 is ${maxOf(2, 4)}")
 
     // ------------------------------
     // 5
     // ------------------------------
+    println("\nSection 5")
+
     printProduct("6", "7")
     printProduct("a", "7")
     printProduct("a", "b")
@@ -37,12 +47,17 @@ fun main() {
     // ------------------------------
     // 6
     // ------------------------------
+    println("\nSection 6")
+
     var aa: String? = "abc"
     aa = null // if ? removed, generate compilation error
+    println(aa)
 
     // ------------------------------
     // 7
     // ------------------------------
+    println("\nSection 7")
+
     val items = listOf("apple", "banana", "kiwifruit")
 
     for (item in items) {
@@ -58,6 +73,8 @@ fun main() {
     // ------------------------------
     // 8
     // ------------------------------
+    println("\nSection 8")
+
     println(describe(1))
     println(describe("Hello"))
     println(describe(1000L))
@@ -67,6 +84,8 @@ fun main() {
     // ------------------------------
     // 9
     // ------------------------------
+    println("\nSection 9")
+
     val fruits = listOf("banana", "avocado", "apple", "kiwifruit")
     fruits
         .filter { it.startsWith("a") }

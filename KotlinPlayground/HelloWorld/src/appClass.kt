@@ -3,6 +3,7 @@ fun main() {
     // ------------------------------
     // 1
     // ------------------------------
+    println("\nSection 1")
 
     val person = Person("Iqbal", false)
     println(person.name)
@@ -14,6 +15,7 @@ fun main() {
     // ------------------------------
     // 2
     // ------------------------------
+    println("\nSection 2")
 
     val rect1 = Rectangle(2, 2)
     println(rect1.height)
@@ -28,17 +30,48 @@ fun main() {
     // ------------------------------
     // 3
     // ------------------------------
+    println("\nSection 3")
+
     println(Color.BLUE.rgb())
     println(getMnemonic(Color.BLUE))
     println(getWarmth(Color.BLUE))
     println(mix(Color.BLUE, Color.YELLOW))
     println(mixOptimized(Color.BLUE, Color.YELLOW))
+
+    // ------------------------------
+    // 4
+    // ------------------------------
+    println("\nSection 4")
+
+    println (eval(Sum(Sum(Num(1), Num(2)), Num (4))))
+    println (evalWithLogging(Sum(Sum(Num(1), Num(2)), Num (4))))
+
+    // ------------------------------
+    // 4
+    // ------------------------------
+    println("\nSection 5")
+
+    for(i in 1..100) {
+        println(fizzbuzz(i))
+    }
+
+    for(i in 100 downTo 1 step 2) {
+        println(fizzbuzz(i))
+    }
 }
+
+// ------------------------------
+// 1
+// ------------------------------
 
 class Person(
     val name: String,
     var isMarried: Boolean
 )
+
+// ------------------------------
+// 2
+// ------------------------------
 
 class Rectangle(
     val height: Int, val width: Int
@@ -46,6 +79,10 @@ class Rectangle(
     val isSquare: Boolean
         get() = height == width
 }
+
+// ------------------------------
+// 3
+// ------------------------------
 
 enum class Color(
     val r: Int, val g: Int, val b: Int
@@ -69,14 +106,14 @@ fun getMnemonic(color: Color) =
     }
 
 fun getWarmth(color: Color) =
-    when(color) {
+    when (color) {
         Color.RED, Color.ORANGE, Color.YELLOW -> "warm"
         Color.GREEN -> "neutral"
         Color.BLUE, Color.INDIGO, Color.VIOLET -> "cold"
     }
 
 fun mix(c1: Color, c2: Color) =
-    when(setOf(c1, c2)) {
+    when (setOf(c1, c2)) {
         setOf(Color.RED, Color.YELLOW) -> Color.ORANGE
         setOf(Color.YELLOW, Color.BLUE) -> Color.GREEN
         setOf(Color.BLUE, Color.VIOLET) -> Color.INDIGO
@@ -93,3 +130,46 @@ fun mixOptimized(c1: Color, c2: Color) =
                 (c1 == Color.VIOLET && c2 == Color.BLUE) -> Color.INDIGO
         else -> throw Exception("Dirty color")
     }
+
+// ------------------------------
+// 4
+// ------------------------------
+
+interface Expr
+
+class Num(val value: Int): Expr
+
+class Sum(val left: Expr, val right: Expr): Expr
+
+fun eval(e: Expr): Int =
+    when (e) {
+        is Num -> e.value
+        is Sum -> eval(e.right) + eval(e.left)
+        else -> throw IllegalArgumentException("Unknown expression")
+    }
+
+fun evalWithLogging(e: Expr): Int =
+    when(e) {
+        is Num -> {
+            println("Num: ${e.value}")
+            e.value
+        }
+        is Sum -> {
+            val left = evalWithLogging(e.left)
+            val right = evalWithLogging(e.right)
+            println("Sum: $left + $right")
+            left + right
+        }
+        else -> throw IllegalArgumentException("Unknown expression")
+    }
+
+// ------------------------------
+// 5
+// ------------------------------
+
+fun fizzbuzz(i: Int) = when {
+    i % 15 == 0 -> "FizzBuzz "
+    i % 3 == 0 -> "Fizz "
+    i % 5 == 0 -> "Buzz "
+    else -> "$i "
+}
