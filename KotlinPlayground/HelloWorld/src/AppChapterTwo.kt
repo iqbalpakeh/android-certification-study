@@ -1,3 +1,7 @@
+import java.io.BufferedReader
+import java.io.StringReader
+import java.util.*
+
 fun main() {
 
     // ------------------------------
@@ -47,7 +51,7 @@ fun main() {
     println (evalWithLogging(Sum(Sum(Num(1), Num(2)), Num (4))))
 
     // ------------------------------
-    // 4
+    // 5
     // ------------------------------
     println("\nSection 5")
 
@@ -58,6 +62,44 @@ fun main() {
     for(i in 100 downTo 1 step 2) {
         println(fizzBuzz(i))
     }
+
+    // ------------------------------
+    // 6
+    // ------------------------------
+    println("\nSection 6")
+
+    val binaryReps = TreeMap<Char, String>()
+
+    for (c in 'A'..'F') {
+        val binary = Integer.toBinaryString(c.toInt())
+        binaryReps[c] = binary
+    }
+
+    for ((letter, binary) in binaryReps) {
+        println("$letter = $binary")
+    }
+
+    // ------------------------------
+    // 7
+    // ------------------------------
+    println("\nSection 7")
+
+    println(isLetter('q'))
+    println(isNotDigit('x'))
+    println(recognize('8'))
+
+    // ------------------------------
+    // 8
+    // ------------------------------
+    println("\nSection 8")
+
+    var reader = BufferedReader(StringReader("239"))
+    println(readNumber(reader))
+
+    reader = BufferedReader(StringReader("Not a number"))
+    println(readNumber(reader))
+
+
 }
 
 // ------------------------------
@@ -173,3 +215,31 @@ fun fizzBuzz(i: Int) = when {
     i % 5 == 0 -> "Buzz "
     else -> "$i "
 }
+
+// ------------------------------
+// 7
+// ------------------------------
+
+fun isLetter(c: Char) = c in 'a'..'z' || c in 'A'..'Z'
+
+fun isNotDigit(c: Char) = c !in '0'..'9'
+
+fun recognize(c: Char) = when (c) {
+    in '0'..'9' -> "It's a digit!"
+    in 'a'..'z', in 'A'..'Z' -> "It's a letter!"
+    else -> "I don't know..."
+}
+
+// ------------------------------
+// 8
+// ------------------------------
+
+fun readNumber(reader: BufferedReader): Int? =
+    try {
+        val line = reader.readLine()
+        Integer.parseInt(line)
+    } catch (e: NumberFormatException) {
+        null
+    } finally {
+        reader.close()
+    }
