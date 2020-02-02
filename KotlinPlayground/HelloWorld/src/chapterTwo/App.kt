@@ -1,3 +1,5 @@
+package chapterTwo
+
 import java.io.BufferedReader
 import java.io.StringReader
 import java.util.*
@@ -39,16 +41,46 @@ fun main() {
     println(Color.BLUE.rgb())
     println(getMnemonic(Color.BLUE))
     println(getWarmth(Color.BLUE))
-    println(mix(Color.BLUE, Color.YELLOW))
-    println(mixOptimized(Color.BLUE, Color.YELLOW))
+    println(
+        mix(
+            Color.BLUE,
+            Color.YELLOW
+        )
+    )
+    println(
+        mixOptimized(
+            Color.BLUE,
+            Color.YELLOW
+        )
+    )
 
     // ------------------------------
     // 4
     // ------------------------------
     println("\nSection 4")
 
-    println (eval(Sum(Sum(Num(1), Num(2)), Num (4))))
-    println (evalWithLogging(Sum(Sum(Num(1), Num(2)), Num (4))))
+    println (
+        eval(
+            Sum(
+                Sum(
+                    Num(1),
+                    Num(2)
+                ),
+                Num(4)
+            )
+        )
+    )
+    println (
+        evalWithLogging(
+            Sum(
+                Sum(
+                    Num(1),
+                    Num(2)
+                ),
+                Num(4)
+            )
+        )
+    )
 
     // ------------------------------
     // 5
@@ -156,9 +188,18 @@ fun getWarmth(color: Color) =
 
 fun mix(c1: Color, c2: Color) =
     when (setOf(c1, c2)) {
-        setOf(Color.RED, Color.YELLOW) -> Color.ORANGE
-        setOf(Color.YELLOW, Color.BLUE) -> Color.GREEN
-        setOf(Color.BLUE, Color.VIOLET) -> Color.INDIGO
+        setOf(
+            Color.RED,
+            Color.YELLOW
+        ) -> Color.ORANGE
+        setOf(
+            Color.YELLOW,
+            Color.BLUE
+        ) -> Color.GREEN
+        setOf(
+            Color.BLUE,
+            Color.VIOLET
+        ) -> Color.INDIGO
         else -> throw Exception("Dirty Color")
     }
 
@@ -181,12 +222,15 @@ interface Expr
 
 class Num(val value: Int): Expr
 
-class Sum(val left: Expr, val right: Expr): Expr
+class Sum(val left: Expr, val right: Expr):
+    Expr
 
 fun eval(e: Expr): Int =
     when (e) {
         is Num -> e.value
-        is Sum -> eval(e.right) + eval(e.left)
+        is Sum -> eval(e.right) + eval(
+            e.left
+        )
         else -> throw IllegalArgumentException("Unknown expression")
     }
 
