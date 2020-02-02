@@ -3,16 +3,37 @@ package chapterFour
 fun main() {
 
     // ------------------------------
-    // 1
+    // Section 1
     // ------------------------------
 
+    val button = Button()
+    button.click()
+    button.showOff()
+    button.setFocus(true)
+    
 }
 
 // ------------------------------
-// 1
+// Section 1
 // ------------------------------
 
 interface Clickable {
     fun click()
+    fun showOff() = println("I'm clickable!")
 }
 
+interface Focusable {
+    fun setFocus(b: Boolean) = println("I ${if (b) "got" else "lost"} focus.")
+    fun showOff() = println("I'm focusable!")
+}
+
+class Button: Clickable, Focusable {
+
+    override fun click() = println("I was clicked")
+
+    override fun showOff() {
+        super<Clickable>.showOff()
+        super<Focusable>.showOff()
+    }
+
+}
